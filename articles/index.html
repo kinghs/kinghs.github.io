@@ -6,16 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="theme-color" content="dark">
-    <title>Tags | Just for fun</title>
+    <title>Articles | Just for fun</title>
 
     
     
     
     <meta property="og:site_name" content="WangGushi Blog" />
-    <meta property="og:title" content="Tags | Just for fun"/>
-    <meta itemprop="name" content="Tags | Just for fun" />
-    <meta name="twitter:title" content="Tags | Just for fun" />
-    <meta name="application-name" content="Tags | Just for fun" />
+    <meta property="og:title" content="Articles | Just for fun"/>
+    <meta itemprop="name" content="Articles | Just for fun" />
+    <meta name="twitter:title" content="Articles | Just for fun" />
+    <meta name="application-name" content="Articles | Just for fun" />
 
 
     <meta name="description" content="Hello!" />
@@ -61,7 +61,7 @@
             </div>
             <div class="flex">
                 
-                <a href="/articles/">归档</a>
+                <a href="/articles/" aria-current="page">归档</a>
                 
                 <a href="/resume/">简历</a>
                 
@@ -76,22 +76,31 @@
         <main>
             
 
-
-
-
 <header>
     <div class="container">
-        <h1>Tags</h1>
+        <h1>Articles</h1>
+        <p class="subtitle">Posts, tutorials, snippets, musings, and everything else.</p>
     </div>
 </header>
 
+
+
 <section>
     <div class="container">
-        <div class="terms">
-            
+        <div class="filter-container">
+          
+          
         </div>
+        <input id="search-query" type="search" placeholder="Search for anything...">
+        
+        <div id="search-results">
+        </div>
+        <section id="articles-list">
+            
+        </section>
     </div>
 </section>
+<script async src="/ts/search.18ffcb83d3dfda71c6eea8e3932149dfedeeba0aae1b149e12248ff0312b5f45.js"></script>
 
 
         </main>
