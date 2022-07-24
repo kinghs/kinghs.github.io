@@ -6,16 +6,79 @@
     <description>Recent content in 苹果药丸 on 小王的杂货铺</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Mon, 10 Jan 2022 01:02:47 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 10 Dec 2021 01:02:47 +0800</lastBuildDate>
     
 	<atom:link href="https://wanggushi.cn/tags/%E8%8B%B9%E6%9E%9C%E8%8D%AF%E4%B8%B8/index.xml" rel="self" type="application/rss+xml" />
     
     
     
     <item>
-      <title>深圳IO纸牌游戏</title>
-      <link>https://wanggushi.cn/posts/shenzhenio_solitaire/</link>
+      <title>【人工智障】自动泊车</title>
+      <link>https://wanggushi.cn/posts/auto_pilot/</link>
       <pubDate>Mon, 10 Jan 2022 01:02:47 +0800</pubDate>
+      
+      <guid>https://wanggushi.cn/posts/auto_pilot/</guid>
+      <description>&lt;p&gt;希望春节可以有一个初步成果。&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;https://wanggushi.cn/IMG_5009.png&#34;/&gt;
+&lt;/figure&gt;
+
+</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>【苹果药丸】自己维修Macbook Pro type-c 接口</title>
+      <link>https://wanggushi.cn/posts/fix_macbookpro_typec/</link>
+      <pubDate>Fri, 10 Dec 2021 01:02:47 +0800</pubDate>
+      
+      <guid>https://wanggushi.cn/posts/fix_macbookpro_typec/</guid>
+      <description>&lt;p&gt;MacBook Pro (13-inch, 2020, Four Thunderbolt 3 ports)， 这是我的Macbook Pro型号，没错，末代Intel版本的Macbook Pro！&lt;/p&gt;
+&lt;p&gt;某一天我的mac左侧的type-c接口坏了一个，此时距离购买日期已经过了一年，但还不到两年。按照苹果的保修政策，主板应当是保修两年。
+然而拿去苹果维修的时候，店员告诉我重新接了排线但是没有用，因为这个接口是通过排线接到主板上的，所以这个接口已经过了保修期，可以在下次其他主板问题的时候
+一起维修，付物料费就行（大概300+）。另外，对于只有两个接口的笔记本，接口是直接在主板上的，所以可以修。哇哇哇哇哇。。。&lt;/p&gt;
+&lt;p&gt;没事，苹果不给修，就自己干，只要不用热风枪吹主板，只是更换一个零部件应该还是可以自己解决的。于是淘宝买了一个同样的接口，才26元。&lt;/p&gt;
+&lt;p&gt;对比一下，老的接口已经黑了，什么鬼！&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://wanggushi.cn/IMG_4770.png&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;figure&gt;&lt;img src=&#34;https://wanggushi.cn/IMG_4771.png&#34;/&gt;
+&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;苹果吃枣药丸！&lt;/p&gt;
+</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>【记录一下】有趣的A*应用</title>
+      <link>https://wanggushi.cn/posts/astart_compress/</link>
+      <pubDate>Sun, 10 Oct 2021 01:02:47 +0800</pubDate>
+      
+      <guid>https://wanggushi.cn/posts/astart_compress/</guid>
+      <description></description>
+    </item>
+    
+    
+    
+    <item>
+      <title>【记录一下】神经网络参数初始化影响</title>
+      <link>https://wanggushi.cn/posts/neural_network_args_init/</link>
+      <pubDate>Sun, 10 Oct 2021 01:02:47 +0800</pubDate>
+      
+      <guid>https://wanggushi.cn/posts/neural_network_args_init/</guid>
+      <description></description>
+    </item>
+    
+    
+    
+    
+    
+    <item>
+      <title>【人工智障】深圳IO纸牌游戏</title>
+      <link>https://wanggushi.cn/posts/shenzhenio_solitaire/</link>
+      <pubDate>Fri, 10 Jan 2020 01:02:47 +0800</pubDate>
       
       <guid>https://wanggushi.cn/posts/shenzhenio_solitaire/</guid>
       <description>&lt;style&gt;
@@ -47,29 +110,143 @@
 &lt;/div&gt;
 
 &lt;p&gt;这是《深圳IO》附带的一个纸牌游戏，类似于《蜘蛛纸牌》。&lt;/p&gt;
-&lt;p&gt;这个游戏并不是所有开局都有解的。&lt;/p&gt;
-&lt;p&gt;顺带吐槽一下，某个mac版本更新之后，打开这个游戏，界面不会完全显示，顶部的条会消失，这样就不能移动窗口了。&lt;/p&gt;
+&lt;h3 id=&#34;思路&#34;&gt;思路&lt;/h3&gt;
+&lt;p&gt;就是识别纸牌的位置，然后通过有深度限制的A*算法来找到最佳的下一步状态，然后调用鼠标去执行一下动作，大概就是opencv + numpy + pyautogui。
+由于这个有些步骤是不可逆的，比如纸牌已经到目标位置消失了，所以并不是所有开局都能求解。&lt;/p&gt;
+&lt;p&gt;可能啥时候有兴致了再来做一个强化版的，不过目前还没有啥好的思路。&lt;/p&gt;
+&lt;h3 id=&#34;顺带吐槽一下&#34;&gt;顺带吐槽一下&lt;/h3&gt;
+&lt;p&gt;某个mac版本更新之后，打开这个游戏，界面不会完全显示，顶部的条会消失，这样就不能移动窗口了，就像下面这样
+&lt;figure&gt;&lt;img src=&#34;https://wanggushi.cn/shenzhenio_bug.png&#34;/&gt;
+&lt;/figure&gt;
+&lt;/p&gt;
+&lt;h5 id=&#34;百度的搜索结果&#34;&gt;百度的搜索结果&lt;/h5&gt;
+&lt;figure&gt;&lt;img src=&#34;https://wanggushi.cn/shenzhenio_baidu.png&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;h5 id=&#34;再看看google的结果&#34;&gt;再看看Google的结果&lt;/h5&gt;
+&lt;figure&gt;&lt;img src=&#34;https://wanggushi.cn/shenzhenio_google.png&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;所以程序员还得用Google，哈哈&lt;/p&gt;
 </description>
     </item>
     
     
     
     <item>
-      <title>自己维修Macbook Pro type-c 接口</title>
-      <link>https://wanggushi.cn/posts/fix_macbookpro_typec/</link>
-      <pubDate>Mon, 10 Jan 2022 01:02:47 +0800</pubDate>
+      <title>【瞎搞瞎搞】页面生成器</title>
+      <link>https://wanggushi.cn/posts/page_generator/</link>
+      <pubDate>Wed, 10 Jan 2018 01:02:47 +0800</pubDate>
       
-      <guid>https://wanggushi.cn/posts/fix_macbookpro_typec/</guid>
-      <description>&lt;p&gt;MacBook Pro (13-inch, 2020, Four Thunderbolt 3 ports)， 这是我的Macbook Pro型号，没错，末代Intel版本的Macbook Pro！&lt;/p&gt;
-&lt;p&gt;某一天我的mac左侧的type-c接口坏了一个，此时距离购买日期已经过了一年，但还不到两年。按照苹果的保修政策，主板应当是保修两年。
-然而拿去苹果维修的时候，店员告诉我重新接了排线但是没有用，因为这个接口是通过排线接到主板上的，所以这个接口已经过了保修期，可以在下次其他主板问题的时候
-一起维修，付物料费就行（大概300+）。另外，对于只有两个接口的笔记本，接口是直接在主板上的，所以可以修。哇哇哇哇哇。。。&lt;/p&gt;
-&lt;p&gt;没事，苹果不给修，就自己干，只要不用热风枪吹主板，只是更换一个零部件应该还是可以自己解决的。于是淘宝买了一个同样的接口，才26元。&lt;/p&gt;
-&lt;p&gt;对比一下，老的接口已经黑了，什么鬼！&lt;/p&gt;
+      <guid>https://wanggushi.cn/posts/page_generator/</guid>
+      <description></description>
+    </item>
+    
+    
+    
+    <item>
+      <title>【瞎搞瞎搞】用程序员的方式获取免费电影票</title>
+      <link>https://wanggushi.cn/posts/lucky_ticket/</link>
+      <pubDate>Tue, 10 Jan 2017 01:02:47 +0800</pubDate>
+      
+      <guid>https://wanggushi.cn/posts/lucky_ticket/</guid>
+      <description></description>
+    </item>
+    
+    
+    
+    <item>
+      <title>【瞎搞瞎搞】魔改Redis实现限流</title>
+      <link>https://wanggushi.cn/posts/redis_ratelimiter/</link>
+      <pubDate>Sat, 20 Feb 2016 01:02:47 +0800</pubDate>
+      
+      <guid>https://wanggushi.cn/posts/redis_ratelimiter/</guid>
+      <description>&lt;p&gt;为什么有这个需求？因为我手贱。当时同事用我的手机号码测试短信下发，于是我直接用网页上的接口无限replay xhr，也骚扰一下他，这时候发现我可以无限制的发。
+发一条都是要钱的嘛，所以自然有了限流的需求。第一版是同事做的，直接用的Guava里面的Ratelimiter，所以并不能实现多个服务实例共享限流信息，于是需要我开发第二版限流。&lt;/p&gt;
+&lt;p&gt;限流算法就是采用的token bucket，可以应对突发情况。于是我实现了三种版本&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;修改Redis源码（这个时候还是Redis 3.0x）&lt;/li&gt;
+&lt;li&gt;实现一个lua脚本&lt;/li&gt;
+&lt;li&gt;Redis事务&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;qps自然是1 &amp;gt; 2 &amp;gt; 3
+我还额外实现了和spring的集成，很轻松就可以在项目中定义ratelimiter。怀念我那些还会写java的日子。&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;https://wanggushi.cn/redis_token_bucket.png&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;虽然从稳定和升级的角度来看，确实不应该修改Redis源码来新增一个命令，但是我还是觉得这样魔改一下挺有意思的。&lt;/p&gt;
+&lt;p&gt;大概过程就是找到程序入口，找到get/set这种命令是如何实现的，仿照增加一个新的命令。&lt;/p&gt;
+&lt;p&gt;redis.c&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;struct&lt;/span&gt; redisCommand redisCommandTable[] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; {
+    {&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;tokenBucket&amp;#34;&lt;/span&gt;,tokenBucketCommand,&lt;span style=&#34;color:#ae81ff&#34;&gt;8&lt;/span&gt;,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;wmF&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;,NULL,&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;},
+    {&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;leakBucket&amp;#34;&lt;/span&gt;,leakBucketCommand,&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;wmF&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;,NULL,&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;},
+    {&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;get&amp;#34;&lt;/span&gt;,getCommand,&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;rF&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;,NULL,&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;},
+    {&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;set&amp;#34;&lt;/span&gt;,setCommand,&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;wm&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;,NULL,&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;},
+    {&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;setnx&amp;#34;&lt;/span&gt;,setnxCommand,&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;wmF&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;,NULL,&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;},
+    ...
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;t_string.c&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;tokenBucketCommand&lt;/span&gt;(redisClient &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;c){
+
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;long&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;long&lt;/span&gt; oldTokenNum, lastCheckTime, nowTime, nowTokenNum, basicTokenNum, bucketSize, numPerPeriod, period, expiredTime;
+    robj &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;bucketName, &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;bucketTime, &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;res, &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;timeObject;
+
+    ...
+
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (lastCheckTime &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;){
+        nowTokenNum &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; basicTokenNum;
+        lastCheckTime &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; nowTime;
+    }&lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt;{
+        nowTokenNum &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; oldTokenNum &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; (nowTime&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;lastCheckTime)&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;period&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;numPerPeriod;
+        nowTokenNum &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; nowTokenNum &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; bucketSize &lt;span style=&#34;color:#f92672&#34;&gt;?&lt;/span&gt; nowTokenNum : bucketSize;
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt;( (nowTime&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;lastCheckTime) &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;=&lt;/span&gt; period) lastCheckTime &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; nowTime;
+    }
+
+    ...
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;有意思的点在于描述token bucket的过程中，讲述的都是以一定的速率放入令牌，很容易的就会想到需要有一个线程来做这个事情，但是实际上这个操作可以“懒“，
+即在获取令牌的时候再来计算是不是真的有令牌可用就行。&lt;/p&gt;
+&lt;p&gt;看看效果&lt;/p&gt;
+&lt;p&gt;tokenbucket 命令后面跟的参数分别是bucket名字，时间存储的key，初始化令牌数，最大令牌数，添加令牌时间间隔，过期时间&lt;/p&gt;
+&lt;script id=&#34;asciicast-80Qr4u0TteQfU7rkI8cwKVWWq&#34; src=&#34;https://asciinema.org/a/80Qr4u0TteQfU7rkI8cwKVWWq.js&#34; async&gt;&lt;/script&gt;
 </description>
     </item>
     
     
+    
+    <item>
+      <title>【瞎搞瞎搞】IDEA插件开发</title>
+      <link>https://wanggushi.cn/posts/idea_plugin/</link>
+      <pubDate>Sun, 10 Jan 2016 01:02:47 +0800</pubDate>
+      
+      <guid>https://wanggushi.cn/posts/idea_plugin/</guid>
+      <description>&lt;p&gt;这是一段噩梦般的日子，在店加销售端开发 + 做数据中心 + 帮PM写爬虫获取数据&lt;/p&gt;
+&lt;p&gt;后面彻底转到数据中心后，面对的就是海量的crud。框架是spring + mybatis。&lt;/p&gt;
+&lt;p&gt;每天就是写dao/xxx.java, xxx.xml, 不得不一直在这两种文件之间跳转，IDEA提供了
+跳转到文件的快捷键，但是仍然需要手工输入文件名，并且跳转到xml文件后，仍然需要手工定位对应sql的位置。（可能我表达的不太清楚，不过有经验的同学应该都明白我说的跳转是什么）&lt;/p&gt;
+&lt;p&gt;于是我在某个周末的晚上写了一个插件可以方便的跳转，默认快捷键是&lt;kbd&gt;&lt;kbd&gt;CTRL&lt;/kbd&gt; + &lt;kbd&gt;SHIFT&lt;/kbd&gt; + &lt;kbd&gt;K&lt;/kbd&gt;&lt;/kbd&gt;，哈哈。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;
+
+&lt;span style=&#34;color:#75715e&#34;&gt;/**
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * Created by K on 2016/7/14.
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; */&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;SqlJumpAction&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;extends&lt;/span&gt; AnAction &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;final&lt;/span&gt; String sqlIdReg &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;(?&amp;lt;=id=[&amp;#39;\&amp;#34;])[a-zA-Z0-9]+(?=[&amp;#39;\&amp;#34;])&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;private&lt;/span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;final&lt;/span&gt; Pattern sqlIdPattern &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Pattern&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;compile&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;sqlIdReg&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+
+    &lt;span style=&#34;color:#a6e22e&#34;&gt;@Override&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;actionPerformed&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;AnActionEvent e&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+        Project project &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; e&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;getData&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;PlatformDataKeys&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;PROJECT&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;try&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+
+            PsiElement psiElement &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; e&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;getData&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;PlatformDataKeys&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;PSI_ELEMENT&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+            &lt;span style=&#34;color:#f92672&#34;&gt;...&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;一个基本的插件基本上靠一个继承AnAction的类和plugin.xml就可以搞定了，效果如下。&lt;/p&gt;
+&lt;p&gt;在这之前我完全没有写插件的经验，java从0开始也就写了一年左右，完全是凭借着兴趣折腾出来的。
+总结起来其实还是挺简单的，明白有哪些信息是可以拿到的，有哪些信息是需要拿到的，自然就可以写出来了。
+IDEA可真是java开发神器，不过我还是更乐意写Python，毕竟人生苦短。&lt;/p&gt;
+</description>
+    </item>
     
     
   </channel>

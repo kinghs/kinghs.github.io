@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hello">
+    
+    <link rel="shortcut icon" href="https://wanggushi.cn/favicon.ico">
+    
+    <link rel="stylesheet" href="/css/style.min.css">
+
+    <title>【瞎搞瞎搞】IDEA插件开发</title>
+</head>
+<body><header id="banner">
+    <h2><a href="https://wanggushi.cn/">小王的杂货铺</a></h2>
+    <nav>
+        <ul>
+            <li>
+                <a href="/" title="posts">归档</a>
+            </li><li>
+                <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E9%9A%9C/" title="artificialstupid">人工智障</a>
+            </li><li>
+                <a href="/tags/" title="tags">标签</a>
+            </li><li>
+                <a href="/about/" title="about">关于我</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main id="content">
+<article>
+    <header id="post-header">
+        <h1>【瞎搞瞎搞】IDEA插件开发</h1>
+            <div>
+                <time>January 10, 2016</time>
+                </div>
+    </header><p>这是一段噩梦般的日子，在店加销售端开发 + 做数据中心 + 帮PM写爬虫获取数据</p>
+<p>后面彻底转到数据中心后，面对的就是海量的crud。框架是spring + mybatis。</p>
+<p>每天就是写dao/xxx.java, xxx.xml, 不得不一直在这两种文件之间跳转，IDEA提供了
+跳转到文件的快捷键，但是仍然需要手工输入文件名，并且跳转到xml文件后，仍然需要手工定位对应sql的位置。（可能我表达的不太清楚，不过有经验的同学应该都明白我说的跳转是什么）</p>
+<p>于是我在某个周末的晚上写了一个插件可以方便的跳转，默认快捷键是<kbd><kbd>CTRL</kbd> + <kbd>SHIFT</kbd> + <kbd>K</kbd></kbd>，哈哈。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">
+
+<span style="color:#75715e">/**
+</span><span style="color:#75715e"> * Created by K on 2016/7/14.
+</span><span style="color:#75715e"> */</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SqlJumpAction</span> <span style="color:#66d9ef">extends</span> AnAction <span style="color:#f92672">{</span>
+
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> String sqlIdReg <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;(?&lt;=id=[&#39;\&#34;])[a-zA-Z0-9]+(?=[&#39;\&#34;])&#34;</span><span style="color:#f92672">;</span>
+
+    <span style="color:#66d9ef">private</span>  <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> Pattern sqlIdPattern <span style="color:#f92672">=</span> Pattern<span style="color:#f92672">.</span><span style="color:#a6e22e">compile</span><span style="color:#f92672">(</span>sqlIdReg<span style="color:#f92672">);</span>
+
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">actionPerformed</span><span style="color:#f92672">(</span>AnActionEvent e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        Project project <span style="color:#f92672">=</span> e<span style="color:#f92672">.</span><span style="color:#a6e22e">getData</span><span style="color:#f92672">(</span>PlatformDataKeys<span style="color:#f92672">.</span><span style="color:#a6e22e">PROJECT</span><span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">try</span><span style="color:#f92672">{</span>
+
+            PsiElement psiElement <span style="color:#f92672">=</span> e<span style="color:#f92672">.</span><span style="color:#a6e22e">getData</span><span style="color:#f92672">(</span>PlatformDataKeys<span style="color:#f92672">.</span><span style="color:#a6e22e">PSI_ELEMENT</span><span style="color:#f92672">);</span>
+            <span style="color:#f92672">...</span>
+</code></pre></div><p>一个基本的插件基本上靠一个继承AnAction的类和plugin.xml就可以搞定了，效果如下。</p>
+<p>在这之前我完全没有写插件的经验，java从0开始也就写了一年左右，完全是凭借着兴趣折腾出来的。
+总结起来其实还是挺简单的，明白有哪些信息是可以拿到的，有哪些信息是需要拿到的，自然就可以写出来了。
+IDEA可真是java开发神器，不过我还是更乐意写Python，毕竟人生苦短。</p>
+</article>
+
+        </main><footer id="footer">
+    Copyright © 2099 KingHS
+</footer>
+</body>
+</html>

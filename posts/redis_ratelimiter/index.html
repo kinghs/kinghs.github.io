@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hello">
+    
+    <link rel="shortcut icon" href="https://wanggushi.cn/favicon.ico">
+    
+    <link rel="stylesheet" href="/css/style.min.css">
+
+    <title>【瞎搞瞎搞】魔改Redis实现限流</title>
+</head>
+<body><header id="banner">
+    <h2><a href="https://wanggushi.cn/">小王的杂货铺</a></h2>
+    <nav>
+        <ul>
+            <li>
+                <a href="/" title="posts">归档</a>
+            </li><li>
+                <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E9%9A%9C/" title="artificialstupid">人工智障</a>
+            </li><li>
+                <a href="/tags/" title="tags">标签</a>
+            </li><li>
+                <a href="/about/" title="about">关于我</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main id="content">
+<article>
+    <header id="post-header">
+        <h1>【瞎搞瞎搞】魔改Redis实现限流</h1>
+            <div>
+                <time>February 20, 2016</time>
+                </div>
+    </header><p>为什么有这个需求？因为我手贱。当时同事用我的手机号码测试短信下发，于是我直接用网页上的接口无限replay xhr，也骚扰一下他，这时候发现我可以无限制的发。
+发一条都是要钱的嘛，所以自然有了限流的需求。第一版是同事做的，直接用的Guava里面的Ratelimiter，所以并不能实现多个服务实例共享限流信息，于是需要我开发第二版限流。</p>
+<p>限流算法就是采用的token bucket，可以应对突发情况。于是我实现了三种版本</p>
+<ol>
+<li>修改Redis源码（这个时候还是Redis 3.0x）</li>
+<li>实现一个lua脚本</li>
+<li>Redis事务</li>
+</ol>
+<p>qps自然是1 &gt; 2 &gt; 3
+我还额外实现了和spring的集成，很轻松就可以在项目中定义ratelimiter。怀念我那些还会写java的日子。</p>
+<figure><img src="/redis_token_bucket.png"/>
+</figure>
+
+<p>虽然从稳定和升级的角度来看，确实不应该修改Redis源码来新增一个命令，但是我还是觉得这样魔改一下挺有意思的。</p>
+<p>大概过程就是找到程序入口，找到get/set这种命令是如何实现的，仿照增加一个新的命令。</p>
+<p>redis.c</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">struct</span> redisCommand redisCommandTable[] <span style="color:#f92672">=</span> {
+    {<span style="color:#e6db74">&#34;tokenBucket&#34;</span>,tokenBucketCommand,<span style="color:#ae81ff">8</span>,<span style="color:#e6db74">&#34;wmF&#34;</span>,<span style="color:#ae81ff">0</span>,NULL,<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>},
+    {<span style="color:#e6db74">&#34;leakBucket&#34;</span>,leakBucketCommand,<span style="color:#ae81ff">3</span>,<span style="color:#e6db74">&#34;wmF&#34;</span>,<span style="color:#ae81ff">0</span>,NULL,<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>},
+    {<span style="color:#e6db74">&#34;get&#34;</span>,getCommand,<span style="color:#ae81ff">2</span>,<span style="color:#e6db74">&#34;rF&#34;</span>,<span style="color:#ae81ff">0</span>,NULL,<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>},
+    {<span style="color:#e6db74">&#34;set&#34;</span>,setCommand,<span style="color:#f92672">-</span><span style="color:#ae81ff">3</span>,<span style="color:#e6db74">&#34;wm&#34;</span>,<span style="color:#ae81ff">0</span>,NULL,<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>},
+    {<span style="color:#e6db74">&#34;setnx&#34;</span>,setnxCommand,<span style="color:#ae81ff">3</span>,<span style="color:#e6db74">&#34;wmF&#34;</span>,<span style="color:#ae81ff">0</span>,NULL,<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>},
+    ...
+</code></pre></div><p>t_string.c</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">tokenBucketCommand</span>(redisClient <span style="color:#f92672">*</span>c){
+
+    <span style="color:#66d9ef">long</span> <span style="color:#66d9ef">long</span> oldTokenNum, lastCheckTime, nowTime, nowTokenNum, basicTokenNum, bucketSize, numPerPeriod, period, expiredTime;
+    robj <span style="color:#f92672">*</span>bucketName, <span style="color:#f92672">*</span>bucketTime, <span style="color:#f92672">*</span>res, <span style="color:#f92672">*</span>timeObject;
+
+    ...
+
+    <span style="color:#66d9ef">if</span> (lastCheckTime <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>){
+        nowTokenNum <span style="color:#f92672">=</span> basicTokenNum;
+        lastCheckTime <span style="color:#f92672">=</span> nowTime;
+    }<span style="color:#66d9ef">else</span>{
+        nowTokenNum <span style="color:#f92672">=</span> oldTokenNum <span style="color:#f92672">+</span> (nowTime<span style="color:#f92672">-</span>lastCheckTime)<span style="color:#f92672">/</span>period<span style="color:#f92672">*</span>numPerPeriod;
+        nowTokenNum <span style="color:#f92672">=</span> nowTokenNum <span style="color:#f92672">&lt;</span> bucketSize <span style="color:#f92672">?</span> nowTokenNum : bucketSize;
+        <span style="color:#66d9ef">if</span>( (nowTime<span style="color:#f92672">-</span>lastCheckTime) <span style="color:#f92672">&gt;=</span> period) lastCheckTime <span style="color:#f92672">=</span> nowTime;
+    }
+
+    ...
+</code></pre></div><p>有意思的点在于描述token bucket的过程中，讲述的都是以一定的速率放入令牌，很容易的就会想到需要有一个线程来做这个事情，但是实际上这个操作可以“懒“，
+即在获取令牌的时候再来计算是不是真的有令牌可用就行。</p>
+<p>看看效果</p>
+<p>tokenbucket 命令后面跟的参数分别是bucket名字，时间存储的key，初始化令牌数，最大令牌数，添加令牌时间间隔，过期时间</p>
+<script id="asciicast-80Qr4u0TteQfU7rkI8cwKVWWq" src="https://asciinema.org/a/80Qr4u0TteQfU7rkI8cwKVWWq.js" async></script>
+</article>
+
+        </main><footer id="footer">
+    Copyright © 2099 KingHS
+</footer>
+</body>
+</html>
